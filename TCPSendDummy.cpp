@@ -98,6 +98,8 @@ void consumer(queue<TransferData*>* transfer_datas, mutex* m, sem_t *s, int sock
         transfer_datas->pop();
         m->unlock();
 
+		sem_post(s);
+
 		int r = data->size;
  		if (r)
 		{
@@ -109,7 +111,7 @@ void consumer(queue<TransferData*>* transfer_datas, mutex* m, sem_t *s, int sock
 		delete data;
 
  		if (r <= 0) break;
-		sem_post(s);
+		
     }
 
 	printf ("Consume quiting\n");  fflush (stdout);
